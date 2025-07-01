@@ -26,9 +26,9 @@ def check_response(response):
 
 def get_snow_relationships(snow_base, kind, target, start_date, auth):
     query = urlencode({
-        "sysparm_query": f"sys_updated_on>{start_date.replace(microsecond=0).isoformat()}^parent.sys_class_name={target}",
+        "sysparm_query": f"sys_updated_on>{start_date.replace(microsecond=0).isoformat()}^parent.sys_class_name={target}^type.name=Runs On::Runs",
         "sysparm_limit": 1000,
-        "sysparm_fields": "parent,parent.name,child,child.name"
+        "sysparm_fields": "parent,parent.name,child,child.name,type.name"
     })
     return check_response(requests.get(snow_base + "cmdb_rel_ci?" + query, auth=auth)).json()["result"]
 
